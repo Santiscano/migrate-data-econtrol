@@ -11,7 +11,11 @@ const route = Router();
 const api = new ApiKeys();
 
 // list routes 
+// route.use();
+
+
+
 route.use( "/auth", api.validateApikey,  authRoutes );
-route.use( "/example", api.validateApikey, ValidateToken.auth, exampleRoutes );
+route.use( "/example",  exampleRoutes );
 
 export default route;

@@ -45,7 +45,7 @@ export class Server implements ServerInterface{
   }
 
   middlewares(): void {
-    this.app.use(this.upload.array('file')); // multer recibe todos los archivos tipo file
+    // this.app.use(this.upload.array('file')); // multer recibe todos los archivos tipo file
     this.app.use(cors());
     this.app.use(morgan("dev"));
     this.app.use(express.json());

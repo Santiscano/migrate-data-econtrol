@@ -4,7 +4,30 @@
 4- ejecute npm run dev
 
 
+# USO DEL CLI
+<!-- *================= CLI-SAMQS ================= -->
+``` shell
+# ver opciones
+cli-samqs -h
+```
 
+``` shell
+# generar un nuevo esquema es decir una api
+cli-samqs generate
+-V, --version                output the version number
+-res, --resourse             crea un modulo completo con archivos route, controller, model, interface
+-ressql, --resourse sql      crea un modulo completo con archivos route, controller, model, interface apartir de una
+                              tabla sql
+-resmongo, --resourse mongo  crea un modulo completo con archivos route, controller, model, interface apartir de una
+                              entidad de mongo
+-r, --route                  crea un archivo route
+-i, --interface              crea un archivo de definicion de tipos
+-c, --controller             crea un controlador
+-mo, --model                 crea un modelo
+-mid, --middleware           crea un middleware
+-h, --help                   display help for command
+```
+<!-- *================= fin CLI-SAMQS ================= -->
 
 ## Usar Metodos
 Guia para utilizar los metodos personales de helpers, middlewares y utilities
