@@ -84,6 +84,7 @@ class CreateFile {
 
   createFile(content: string){
     const filePath = path.join(__dirname, '../../', `${this.tableName}`);
+    console.log('filePath: ', filePath);
 
     fs.writeFileSync(filePath, content);
   }
@@ -97,7 +98,7 @@ interface ContractCreateFile {
 class CreateController extends CreateFile implements ContractCreateFile {
 
   constructor(tableName: string){
-    super(`controllers/${tableName}.controller.ts`);
+    super(`/controllers/${tableName}.controller.ts`);
   }
 
   createContent(){
