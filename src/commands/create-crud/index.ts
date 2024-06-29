@@ -44,7 +44,7 @@ export class ResoursesCommand {
     try {
       const { table } = req.body;
 
-      return res.json( await this.createCrud(table) );
+      return res.json( await ResoursesCommand.createCrud(table) );
     } catch (error) {
       return res.status(500).json({msg : "pasaron cosas"})
     }
@@ -59,7 +59,7 @@ export class ResoursesCommand {
 
       if (allTables.length > 0) {
         allTables.forEach(async (table: string) => {
-          await this.createCrud(table);
+          await ResoursesCommand.createCrud(table);
         });
 
         return res.json({ msg: "se termino la creacion de archivos con exito" });
