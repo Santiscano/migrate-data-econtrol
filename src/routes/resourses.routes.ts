@@ -1,6 +1,6 @@
 import { Router } from "express";
 
-import ResoursesCommand from "../commands/custom";
+import { ResoursesCommand } from "../commands/create-crud";
 
 const route = Router();
 

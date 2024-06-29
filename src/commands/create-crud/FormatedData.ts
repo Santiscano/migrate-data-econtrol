@@ -1,39 +1,18 @@
-import { connection } from "../../config/database/mysql";
-import { FieldPacket, RowDataPacket } from "mysql2";
-import { Request, Response } from "express";
-import fs from "fs";
-import path from 'path';
 
-class ResoursesCommand {
-  
-  static async oneTable(req: Request, res: Response) {
-    try {
-      const { table } = req.body;
-      const [data]: [RowDataPacket[], FieldPacket[]] = await connection.query(`DESCRIBE ${table}`);
-      let columns = Array.isArray(data) 
-        ? data.map(row => { return { Field: row.Field, Type: row.Type }} ) 
-        : [];
-
-      const { 
-        propertiesObj, lengthItems, dataItems, procedureParams, insertInto, values,
-        propertiesColWithoutId, propertiesObjWithoutId, lengthItemsWithoutId, dataItemsWithoutId, 
-        procedureParamsWithoutId, insertIntoWithoutId, valuesWithoutId, setValuesWithoutId
-      } = FormatedData.propertiesDB(columns);
-
-      new CreateController(table).createFile();
-
-      return res.json({ msg: "se termino", columns });
-      // let columns = [...data.map((row) => { return { Field: row.Field, Type: row.Type }})];
-    } catch (error) {
-      return res.status(400).json({msg : "pasaron cosas"})
-    }
-  } 
-}
-
-export default ResoursesCommand;
 
 class FormatedData {
   static propertiesDB(columns: { Field: any; Type: any; }[]){
+    // * usadas
+    const interfaceWithoutId = columns.slice(1)
+      .map(property => `${property.Field}: ${
+        property.Type.startsWith("varchar") ? "string" 
+        : property.Type.startsWith("int") ? "number" 
+        : property.Type.startsWith("date") ? "Date" 
+        : "sin definir"}`)
+      .join("\n  ");
+    
+    
+    // ! sin usar
     const propertiesObj = columns.map((property) => property.Field).join(', ');
     const lengthItems = columns.map(() => '?').join(', ');
     const dataItems = columns.map((property) => `data.${property.Field}`).join(', ');
@@ -56,6 +35,9 @@ class FormatedData {
       }
     }).join('\n            ');
     return {
+      // * usadas
+      interfaceWithoutId,
+      // ! sin usar
       propertiesObj,
       lengthItems,
       dataItems,
@@ -75,41 +57,4 @@ class FormatedData {
   }
 }
 
-class CreateFile {
-  private tableName = '';
-
-  constructor(tableName: string){
-    this.tableName = tableName;
-  }
-
-  createFile(content: string){
-    const filePath = path.join(__dirname, '../../', `${this.tableName}`);
-    console.log('filePath: ', filePath);
-
-    fs.writeFileSync(filePath, content);
-  }
-}
-
-interface ContractCreateFile {
-  createContent(): string;
-  createFile(content: string): void;
-}
-
-class CreateController extends CreateFile implements ContractCreateFile {
-
-  constructor(tableName: string){
-    super(`/controllers/${tableName}.controller.ts`);
-  }
-
-  createContent(){
-    return `aqui ira el controlador`;
-  }
-
-  /**
-   * @override ContractCreateFile createFile method
-   * @returns void
-   */
-  createFile(): void{
-    super.createFile(this.createContent());
-  }
-}
+export default FormatedData;
