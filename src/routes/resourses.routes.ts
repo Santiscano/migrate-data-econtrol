@@ -4,6 +4,7 @@ import { ResoursesCommand } from "../commands/create-crud";
 
 const route = Router();
 
-route.get("/one-table", ResoursesCommand.oneTable);
+route.post("/one-table", ResoursesCommand.oneTable);
+route.post("/all-tables", ResoursesCommand.allTables);
 
 export default route;
