@@ -11,7 +11,7 @@ import { CreateProcedure } from "./templates/CreateProcedure";
 
 import { DB_DATABASE } from "../../config/configPorts";
 
-export class ResoursesCommand {
+export class ResoursesCommandCrud {
 
   static async createCrud(table: string) {
     try {
@@ -36,38 +36,36 @@ export class ResoursesCommand {
 
       return { msg: "se termino la creacion de archivos con exito" };
     } catch (error) {
-      throw new Error(`ocurrio un error al crear el crud de la tabla ${table}`);
+      return { msg : "Ocurrio un error al crear los archivos de las tablas", error }
     }
   }
 
-  static async oneTable(req: Request, res: Response) {
+  static async oneTable(table: string) {
     try {
-      const { table } = req.body;
-
-      return res.json( await ResoursesCommand.createCrud(table) );
+      return await ResoursesCommandCrud.createCrud(table)
     } catch (error) {
-      return res.status(500).json({msg : "pasaron cosas"})
+      return {msg : "pasaron cosas", error}
     }
   }
 
-  static async allTables(req: Request, res: Response) {
+  static async allTables() {
     try {
       const [tables]: [RowDataPacket[], FieldPacket[]] = await connection.query(`SHOW FULL TABLES WHERE Table_Type = 'BASE TABLE'`);
-      let allTables = Array.isArray(tables) 
+      let allTables = Array.isArray(tables)
         ? tables.map(row => row[`Tables_in_${DB_DATABASE}`] ) 
         : [];
 
       if (allTables.length > 0) {
         allTables.forEach(async (table: string) => {
-          await ResoursesCommand.createCrud(table);
+          await ResoursesCommandCrud.createCrud(table);
         });
 
-        return res.json({ msg: "se termino la creacion de archivos con exito" });
+        return { msg: "se termino la creacion de archivos con exito" };
       }
 
-      return res.status(404).json({msg : "no se encontraron tablas"});
+      return {msg : "no se encontraron tablas"};
     } catch (error) {
-      return res.status(500).json({msg : "Ocurrio un error al crear los archivos de las tablas"})
+      return { msg : "Ocurrio un error al crear los archivos de las tablas", error };
     }
   }
 }
