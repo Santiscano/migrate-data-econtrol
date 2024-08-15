@@ -14,7 +14,6 @@ const api = new ApiKeys();
 // route.use();
 
 
-
 route.use( "/auth", api.validateApikey,  authRoutes );
 route.use( "/example",  exampleRoutes );
 route.use( "/resources", resources );

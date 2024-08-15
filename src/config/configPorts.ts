@@ -6,11 +6,19 @@ export const URL = process.env.URL || "://localhost:";
 export const PORT = process.env.PORT || 4600;
 
 // BASES DE DATOS MYSQL
+// E-CONTROL-MADRE
 export const DB_HOST = process.env.DB_HOST || "localhost";
 export const DB_USER = process.env.DB_USER || "root";
 export const DB_DATABASE = process.env.DB_DB || "nombre_base_de_datos";
 export const DB_PORT = process.env.DB_PORT || 3306;
 export const DB_PASSWORD = process.env.DB_PASSWORD || "contraseña_db";
+// E-CONTROL-ESPEJO
+export const DB_HOST_ESPEJO = process.env.DB_HOST_ESPEJO || "localhost";
+export const DB_USER_ESPEJO = process.env.DB_USER_ESPEJO || "root";
+export const DB_DATABASE_ESPEJO = process.env.DB_DB_ESPEJO || "nombre_base_de_datos";
+export const DB_PORT_ESPEJO = process.env.DB_PORT_ESPEJO || 3306;
+export const DB_PASSWORD_ESPEJO = process.env.DB_PASSWORD_ESPEJO || "contraseña_db";
+
 
 // BASE DE DATOS MONGOOSE
 export const MONGODB_URI = process.env.MONGODB_URI;

@@ -1,27 +1,39 @@
-import fs from "fs";
 
 import { HelpersCommands } from "../commands/helpers.command";
+import {
+  DB_DATABASE,
+  DB_DATABASE_ESPEJO,
+  DB_HOST,
+  DB_HOST_ESPEJO,
+  DB_PASSWORD,
+  DB_PASSWORD_ESPEJO,
+  DB_PORT,
+  DB_PORT_ESPEJO,
+  DB_USER,
+  DB_USER_ESPEJO
+} from "../config/configPorts";
+import { ConnectionPoolType } from "../interfaces/sql2";
 
 class MigUpdateTrackingPaqueteoModel {
   table;
-  dbOrigin;
-  dbTarget 
+  dbOrigin: ConnectionPoolType;
+  dbTarget: ConnectionPoolType;
 
   constructor() {
     this.table = 'TB_TRACKING_PAQUETEO';
     this.dbOrigin = {
-      host: '154.56.49.210',
-      database: 'u804519145_enviexpress',
-      user: 'u804519145_enviexpress',
-      password: '2vW@sQTJi5>C',
-      port: 3306
+      host: DB_HOST,
+      database: DB_DATABASE,
+      user: DB_USER,
+      password: DB_PASSWORD,
+      port: Number(DB_PORT)
     };
     this.dbTarget = {
-      host: '85.31.230.199',
-      database: 'e-control',
-      user: 'e-control',
-      password: 'SsO8GhSi28vFE6vZzFbQ',
-      port: 3306
+      host: DB_HOST_ESPEJO,
+      database: DB_DATABASE_ESPEJO,
+      user: DB_USER_ESPEJO,
+      password: DB_PASSWORD_ESPEJO,
+      port: Number(DB_PORT_ESPEJO)
     };
   }
 
