@@ -53,7 +53,7 @@ class MigUpdateTrackingPaqueteoModel {
     // *3-traer datos de la tabla origen y generar query
     const [data] = await origin.query(`SELECT * FROM ${this.table}`);
     const dataOrigin = Array.isArray(data) ? data : [];
-    if (dataOrigin.length === 0) return { msg: `No hay datos para migrar en la tabla ${this.table}`, status: false };
+    if (dataOrigin.length === 0) return { msg: `No hay datos para migrar en la tabla ${this.table}`, status: true };
     
     const queryInsert = await HelpersCommands.createQueryInsert(columnsOrigin, dataOrigin, this.table);
     const ids = dataOrigin.map((item) => item.id);
@@ -69,9 +69,10 @@ class MigUpdateTrackingPaqueteoModel {
     const idsInserted = Array.isArray(dataInserted) ? dataInserted.map((item) => item.id) : [];
 
     // *5-eliminar los registros que ya existen en la tabla destino
-    const deleted = await target.query(`DELETE FROM ${this.table} WHERE id IN (${idsInserted.join(",")})`);
+    if (idsInserted.length === 0) return { msg: "No se insertaron registros", status: true };
+    const deleted = await origin.query(`DELETE FROM ${this.table} WHERE id IN (${idsInserted.join(",")})`);
 
-    return { msg: "migracion de datos exitosa", status: true, idsInserted, deleted };
+    return { msg: "migracion de datos exitosa", status: true, countInsert: idsInserted.length, deleted };
   }
 
   // eliminara todo lo de tabla origen que ya exista en la tabla destino

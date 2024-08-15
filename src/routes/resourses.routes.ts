@@ -6,10 +6,10 @@ import MigUpdateTrackingPaqueteo from "../controllers/migrateUpdateTrackingPaque
 
 const route = Router();
 
-// *Migrate update tracking paqueteo
+// *Migrate  TB_TRACKING_PAQUETEO
 const trackingPaqueteoController = new MigUpdateTrackingPaqueteo();
-route.post("/migrate-update-tracking-paqueteo", trackingPaqueteoController.updateTrackingPaqueteo);
-route.post("/cross-data-tracking-paqueteo", trackingPaqueteoController.crossDataTrackingPaqueteo); // !ejecutar este primero antes que updateTrackingPaqueteo
+route.post("/migrate-update-tracking-paqueteo", trackingPaqueteoController.updateTrackingPaqueteo); // *esta api migra todos los datos de la tabla origen a la tabla destino
+// route.post("/cross-data-tracking-paqueteo", trackingPaqueteoController.crossDataTrackingPaqueteo); // !esta api solo fue para un caso particular
 
 
 
