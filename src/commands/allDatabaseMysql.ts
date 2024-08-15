@@ -3,7 +3,7 @@ import { RowDataPacket } from "mysql2";
 
 import { connection } from "../config/database/mysql";
 import StringsMethods from '../utilities/stringMethods';
-import { createCrudSql } from "./tableSql";
+// import { createCrudSql } from "./tableSql";
 
 
 const crudAllDatabase = async () => {
@@ -18,7 +18,7 @@ const crudAllDatabase = async () => {
   
       return new Promise(async (resolve, reject) => {
         try {
-          await createCrudSql( table, tableNameCamel, tableNamePascal );
+          // await createCrudSql( table, tableNameCamel, tableNamePascal );
           resolve(console.log(`table ${table} success`));
         } catch (error) {
           reject(error);

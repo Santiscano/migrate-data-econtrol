@@ -1,10 +1,22 @@
-import { Router, Request, Response } from "express";
+import { Router } from "express";
 
 // import { ResoursesCommandCrud } from "../commands/create-crud";
 import { ResoursesCommands } from "../commands";
 import MigUpdateTrackingPaqueteo from "../controllers/migrateUpdateTrackingPaqueteo.controller";
 
 const route = Router();
+
+// *Migrate update tracking paqueteo
+const trackingPaqueteoController = new MigUpdateTrackingPaqueteo();
+route.post("/migrate-update-tracking-paqueteo", trackingPaqueteoController.updateTrackingPaqueteo);
+route.post("/cross-data-tracking-paqueteo", trackingPaqueteoController.crossDataTrackingPaqueteo); // !ejecutar este primero antes que updateTrackingPaqueteo
+
+
+
+
+
+
+
 
 // *Create crud
 route.post("/crud-one-table", ResoursesCommands.oneTableCrud);
@@ -62,17 +74,5 @@ route.post(
 );
 
 route.post("/migrate-all-tables", ResoursesCommands.allTablesMigrateData);
-
-
-
-
-
-
-
-
-
-const trackingPaqueteoController = new MigUpdateTrackingPaqueteo();
-route.post("/migrate-update-tracking-paqueteo", trackingPaqueteoController.updateTrackingPaqueteo);
-route.post("/cross-data-tracking-paqueteo", trackingPaqueteoController.crossDataTrackingPaqueteo); // !ejecutar este primero antes que updateTrackingPaqueteo
 
 export default route;
