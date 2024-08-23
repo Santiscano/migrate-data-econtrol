@@ -2,7 +2,6 @@ import MissingData from '../helpers/missingData';
 import { HelpersCommands } from "../commands/helpers.command";
 import { ColumnsType, ConnectionPoolType } from "../interfaces/sql2";
 
-
 interface MigrateBulk {
   table: string;
   dbOrigin: ConnectionPoolType;
@@ -55,8 +54,7 @@ class FirstMigrateBulkModel {
       const { origin, target } = await HelpersCommands.createConnections(this.dbOrigin, this.dbTarget);
 
       // *3-traer datos de la tabla origen y generar query
-      // const [data] = await origin.query(`SELECT * FROM ${this.table} WHERE ${key} > 16648258 LIMIT 10000`);
-      const [data] = await origin.query(`SELECT * FROM ${this.table} WHERE ${key} > 17214498 LIMIT 5000`);
+      const [data] = await origin.query(`SELECT * FROM ${this.table} LIMIT 20000`);
       const dataOrigin = Array.isArray(data) ? data : [];
       console.log('dataOrigin traida');
       if (dataOrigin.length === 0) return { msg: `No hay datos para migrar en la tabla ${this.table}`, status: true };

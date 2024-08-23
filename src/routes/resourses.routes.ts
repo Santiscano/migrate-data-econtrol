@@ -3,16 +3,25 @@ import { Router } from "express";
 // import { ResoursesCommandCrud } from "../commands/create-crud";
 import { ResoursesCommands } from "../commands";
 import MigUpdateTrackingPaqueteo from "../controllers/migrateUpdateTrackingPaqueteo.controller";
+import FirstMigrateBulk from "../controllers/firstMigrateBulk.controller";
 
 const route = Router();
 
-// *Migrate  TB_TRACKING_PAQUETEO
 const trackingPaqueteoController = new MigUpdateTrackingPaqueteo();
+const firstMigrateBulk = new FirstMigrateBulk();
+
+// *Migrate  TB_TRACKING_PAQUETEO
 route.post("/migrate-update-tracking-paqueteo", trackingPaqueteoController.updateTrackingPaqueteo); // *esta api migra todos los datos de la tabla origen a la tabla destino
 // route.post("/cross-data-tracking-paqueteo", trackingPaqueteoController.crossDataTrackingPaqueteo); // !esta api solo fue para un caso particular
 
 
-
+// *Migrar 
+/**
+ * *migra todos los datos de una tabla origen a una tabla destino - esta es util en particular cuando se hace la migracion por primera vez
+ * @api {post} /first-migrate-one-table-bulk First migrate one table bulk
+ * @apiName First migrate one table bulk
+ */
+route.post("first-migrate-one-table-bulk", firstMigrateBulk.oneTable);
 
 
 

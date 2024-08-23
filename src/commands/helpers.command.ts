@@ -273,7 +273,7 @@ export class HelpersCommands {
       return `(${rowValues})`;
     }).join(', ');
     
-    return `INSERT INTO \`${table}\` (${columns}) VALUES ${values};`;
+    return `INSERT IGNORE INTO \`${table}\` (${columns}) VALUES ${values};`;
   }
 
   static async createQueryInsert(columnsOrigin: ColumnsType[], dataOrigin: RowDataPacket[], table: string) {
@@ -281,7 +281,7 @@ export class HelpersCommands {
     const queries: string[] = [];
     // dividir array dataOrigin en lotes de 30000
     const dataOriginLength = dataOrigin.length;
-    const limit = 300;
+    const limit = 500;
 
     for (let i = 0; i < dataOriginLength; i += limit) {
       const data = dataOrigin.slice(i, i + limit);

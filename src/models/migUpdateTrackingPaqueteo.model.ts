@@ -51,10 +51,10 @@ class MigUpdateTrackingPaqueteoModel {
     const { origin, target } = await HelpersCommands.createConnections(this.dbOrigin, this.dbTarget);
 
     // *3-traer datos de la tabla origen y generar query
-    const [data] = await origin.query(`SELECT * FROM ${this.table}`);
+    const [data] = await origin.query(`SELECT * FROM ${this.table} WHERE statusGoExito = 1 OR statusReport = 1`);
     const dataOrigin = Array.isArray(data) ? data : [];
     if (dataOrigin.length === 0) return { msg: `No hay datos para migrar en la tabla ${this.table}`, status: true };
-    
+
     const queryInsert = await HelpersCommands.createQueryInsert(columnsOrigin, dataOrigin, this.table);
     const ids = dataOrigin.map((item) => item.id);
 

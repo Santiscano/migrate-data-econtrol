@@ -24,6 +24,14 @@ interface MigrateAndCleanDataType {
 
 export class MigrateData {
 
+  async firstBulk({ table, dbOrigin, dbTarget }: MigrateBulk){
+    
+  }
+
+  async updateBulk(){}
+
+
+
   static async bulk({ table, dbOrigin, dbTarget, columnsOrigin, cleanTable, limit, offset }: MigrateBulk) {
     try {
       console.log('se traeran los datos de origen');
